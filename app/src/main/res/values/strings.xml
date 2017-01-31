@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">DevIntensive</string>
+
+    <!--
+    /**
+    * Use the keys in the row names as the names of the packages
+    * — this will help you solve the problem with the same name and
+    * to better understand the context of the use of strings.
+    */ -->
+
+    <!-- Error message (as Example)
+    <string name="error.message.network">Network error</string>
+    <string name="error.message.call"   >Call failed</string>
+    <string name="error.message.map"    >Map loading failed</string> -->
+</resources>
