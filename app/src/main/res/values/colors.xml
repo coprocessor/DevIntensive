@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="color_primary">#3F51B5</color>
+    <color name="color_primary"     >#3F51B5</color>
     <color name="color_primary_dark">#303F9F</color>
-    <color name="color_accent">#FF4081</color>
+    <color name="color_accent"      >#FF4081</color>
 
     <!-- Grayscale -->
     <color name="white"      >#FFFFFF</color>
@@ -10,11 +10,28 @@
     <color name="gray"       >#939393</color>
     <color name="gray_dark"  >#5F5F5F</color>
     <color name="black_light">#323232</color>
-    <color name="black"      >#000000</color>
+
 
     <!-- Basic colors -->
     <color name="green" >#008000</color>
     <color name="blue"  >#0000FF</color>
     <color name="yellow">#FFFF00</color>
     <color name="red"   >#FF0000</color>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <color name="grey"        >#5d5d5d</color>
+    <color name="grey_light"  >#9c9c9c</color>
+    <color name="black"       >#000000</color>
 </resources>

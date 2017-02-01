@@ -1,5 +1,6 @@
 package com.softdesign.dns.devintensive.ui.activities;
 
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,26 +13,26 @@ import com.softdesign.dns.devintensive.utils.ConstantManager;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    //private static final String TAG = ConstantManager.TAG_PREFIX + "Main Activity";
-    private static final String TAG = ConstantManager.TAG_PREFIX + " " + MainActivity.class.getSimpleName(); ///
-    protected EditText mEtHelloWorld; ///
-    protected Button mBtnVisible, mBtnInVisible; ///
-    private String mVisibleMode; ///
-    private int mColorMode; ///
-    private int mActivityCount = 0; ///
+    private static final String TAG = ConstantManager.TAG_PREFIX + "Main Activity";
+//    private static final String TAG = ConstantManager.TAG_PREFIX + " " + MainActivity.class.getSimpleName(); ///
+
+    protected EditText mEditText;
+//    protected Button mBtnVisible, mBtnInVisible; ///
+    protected Button mRedButton, mGreenButton;
+//    private String mVisibleMode; ///
+    private int mColorMode;
+//    private int mActivityCount = 0; ///
 
     /**
-     * Метод вызывается при создании активности (после изменения конфигурации/ возврата к текущей
-     * активности после его уничтожения.
-     *
-     * В данном методе инициализируется/производится:
-     * -UI пользовательский интерфейс (статика)
-     * -инициализация статических данных активности (activity)
-     * -связь данных со списками (инициализация адаптеров)
-     *
-     * Внимание: Не запускать длительные операции по работе с данными в onCreate() !
-     *
-     * @param savedInstanceState -- объект со значениями сохраненными в Bundle -- состояния UI.
+     * Method is called when creating the activity (after a configuration change or return to the
+     * current activity after its destruction.
+     * This method is initialized (made is):
+     * -UI user interface (statics)
+     * -initialization of static data activity
+     * -data connection with lists (initialize adapters)
+     * Warning: do Not start long-running operations to work with data in onCreate()!
+     * @param savedInstanceState -- the object with the values stored in the Bundle
+     *                           -- the state of the UI.
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,17 +40,32 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
         Log.d(TAG, "onCreate");
 
+        mRedButton = (Button) findViewById(R.id.red_btn);
+        mGreenButton = (Button) findViewById(R.id.green_btn);
+        mEditText = (EditText) findViewById(R.id.edit_text);
+
+        mRedButton.setOnClickListener(this);
+        mGreenButton.setOnClickListener(this);
+
         if (savedInstanceState == null) {
-            // 'активность' запускается впервые
+            // the activity starts for the first time
         } else {
-            // 'активность' уже создавалась
+            // activity is already created
+            mColorMode = savedInstanceState.getInt(ConstantManager.COLOR_MODE_KEY);
+
+            if(mColorMode == Color.RED) {
+                mEditText.setBackgroundColor(Color.RED);
+            } else if (mColorMode == Color.GREEN) {
+                mEditText.setBackgroundColor(Color.GREEN);
+            }
         }
     }
 
+    // TODO if the object is not specified ID, then save system data entered will not happen.
+
     /**
-     * Метод вызывается при старте 'активности', за момент до того, как UI станет доступен
-     * пользователю. Как правило, в данном методе происходит регистрация подписки на события
-     * остановка которых была произведена в onStop().
+     * Method is called when starting activity for the time before the UI becomes available to the
+     * user. Usually in this method registers event subscriptions stop which was made in onStop().
      */
     @Override
     protected void onStart() {
@@ -58,11 +74,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     /**
-     * Метод вызывается, когда 'активность' становится доступной пользователю для взаимодействия.
-     * В данном методе, как правило, происходит запуск анимаций, аудио/видео, запускается
-     * BroadCastReceiver -- необходимых для реализации UI-логики (запуск выполнения потока и т. п.).
-     * Метод должен быть максимально "легковесным" -- для увеличения производительности (адекватной
-     * отзывчивости) UI.
+     * Method is invoked when the 'activity' is available to the user for interaction. In this
+     * method, as a rule, run animations, audio/video, your BroadCastReceiver is run -- necessary
+     * for the implementation of the UI logic (start of thread execution, etc.). The method should
+     * be as "lightweight" -- to increase productivity (adequate responsiveness) UI.
      */
     @Override
     protected void onResume() {
@@ -71,10 +86,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     /**
-     * Метод вызывается, когда текущая 'активность' теряет фокус, но остается видимой пользователю
-     * (всплытие диалогового окна, частичное перекрытие иной 'активностью' и т. д.
-     * <p/>
-     * В данном методе реализуют сохранение "легковесных" UI -данных/-анимаций/-аудио/видео и т. д.)
+     * Method is invoked when the current 'activity' loses focus but remains visible to the user
+     * (the ascent of the dialog box, partial overlapping of the different 'activity', etc. In this
+     * method, implement the preservation of "lightweight" UI data/animations/audio/video, etc.)
      */
     @Override
     protected void onPause() {
@@ -82,10 +96,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Log.d(TAG, "onPause");
     }
 
+    // TODO here is the save data (attributes, position, etc.) to Bundle
+
     /**
-     * Метод вызывается, когда 'активность' становится невидимой пользователю. В данном методе
-     * происходит отписка от событий, остановка "тяжелых" анимаций, сложных операций по сохранению
-     * данных, прерывание запущенных потоков и т. д.
+     * Method is invoked when the 'activity' becomes invisible to the user. In this method occurs
+     * unsubscribing from events that stop the "heavy" animations, complex operations for saving
+     * data, interrupting running threads, etc.
      */
     @Override
     protected void onStop() {
@@ -94,8 +110,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     /**
-     * Метод вызывается по окончанию работы 'активности' -- когда это происходит системно или
-     * после вызова метода finish().
+     * Method is called at the end of the 'activity' -- when this happens systemically or after
+     * calling the method finish().
      */
     @Override
     protected void onDestroy() {
@@ -104,12 +120,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     /**
-     * Метод вызывается при рестарте 'активности' -- возобновление работы после вызова метода
-     * onStop(). В данном методе реализуется специфическая бизнес-логика, которая должна быть
-     * реализована, именно, при рестарте 'активности'. Например: запрос к серверу, который необходимо
-     * вызывать по возвращении из другой 'активности' (обновления данных, подписка на определенное
-     * событие проинициализированное на другом экране  (специфическая бизнес-логика "завязанная", именно
-     * на перезапуске 'активности').
+     * Method is called when the restart 'activity' -- resume after a call to onStop () method.
+     * This method implements the specific business logic that should be implemented, namely, when
+     * the restart 'activity'. Example: server request, which must be called on the return from
+     * another 'activity' (data updates, subscription to a particular event initialized on another
+     * screen (specific business logic "tied", on restart 'activity').
      */
     @Override
     protected void onRestart() {
@@ -120,11 +135,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.red_btn:
+                mEditText.setBackgroundColor(Color.RED);
+                mColorMode = Color.RED;
+                break;
+
+            case R.id.green_btn:
+                mEditText.setBackgroundColor(Color.GREEN);
+                mColorMode = Color.GREEN;
+                break;
+
         }
     }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
+
+        Log.d(TAG, "onSaveInstanceState()");
+        outState.putInt(ConstantManager.COLOR_MODE_KEY, mColorMode);
     }
 }
